@@ -43,7 +43,10 @@ import com.sam_chordas.android.stockhawk.service.StockTaskService;
 import com.sam_chordas.android.stockhawk.touch_helper.SimpleItemTouchHelperCallback;
 import com.sam_chordas.android.stockhawk.webservices.Quote;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MyStocksActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final String LOG_TAG = MyStocksActivity.class.getSimpleName();
@@ -116,8 +119,20 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                         TextView symbolView = (TextView) v.findViewById(R.id.stock_symbol);
                         String symbol = symbolView.getText().toString();
                         intent.putExtra("symbol",symbol);
-                        intent.putExtra("startDate","2016-06-15");
-                        intent.putExtra("endDate","2016-06-22");
+                        Calendar calendar = Calendar.getInstance();
+                        Date now  = calendar.getTime();
+                        calendar.add(Calendar.MONTH,-1);
+                        Date start = calendar.getTime();
+
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                        String startDate = formatter.format(start);
+                        String endDate = formatter.format(now);
+
+                        Log.d( LOG_TAG, "End date:" + endDate + "    StartDate=" + startDate);
+//                        intent.putExtra("startDate","2016-06-15");
+//                        intent.putExtra("endDate","2016-06-22");
+                        intent.putExtra("startDate",startDate);
+                        intent.putExtra("endDate",endDate);
                         startService(intent);
 
                     }

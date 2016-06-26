@@ -105,7 +105,6 @@ public class PlotActivity extends Activity {
         plot.setDomainLabel("Period");
         plot.setRangeLabel("Stock Price");
 
-        plot.getGraphWidget().setRangeTickLabelWidth(100);
         // reduce the number of range labels
         plot.setTicksPerRangeLabel(5);
         plot.setTicksPerDomainLabel(30);
