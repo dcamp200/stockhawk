@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.androidplot.xy.LineAndPointFormatter;
@@ -19,9 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlotActivity extends Activity {
+    private static final String LOG_TAG = PlotActivity.class.getSimpleName();
     private XYPlot plot;
-
-
 
 
     @Override
@@ -42,8 +42,6 @@ public class PlotActivity extends Activity {
         stockSymbolView.setText(intent.getStringExtra("symbol"));
         startDateView.setText(String.format(getResources().getString(R.string.from), intent.getStringExtra("startDate")));
         endDateView.setText(String.format(getResources().getString(R.string.to), intent.getStringExtra("endDate")));
-
-
 
         plot = (XYPlot) findViewById(R.id.linechart);
 
@@ -69,8 +67,9 @@ public class PlotActivity extends Activity {
         float periodLow = 0;
 
         for (Quote quote: quotes) {
-            high = Float.valueOf(highQuote.getHigh());
-            low  = Float.valueOf(lowQuote.getLow());
+            high = Float.valueOf(quote.getHigh());
+            low  = Float.valueOf(quote.getLow());
+            Log.d(LOG_TAG, "High:" + high + "   PeriodHigh:" + periodHigh);
             if (high > periodHigh) {
                 periodHigh = high;
                 highQuote = quote;
@@ -83,8 +82,9 @@ public class PlotActivity extends Activity {
             seriesNumbers.add(Float.valueOf(quote.getClose()));
         }
 
-        String periodHighText = numberFormatter.format(high);
-        String periodLowText = numberFormatter.format(low);
+        Log.d(LOG_TAG, "High:" + high + "   Low:" + low);
+        String periodHighText = numberFormatter.format(periodHigh);
+        String periodLowText = numberFormatter.format(periodLow);
         periodHighView.setText(String.format(getResources().getString(R.string.high_price),periodHighText));
         periodLowView.setText(String.format(getResources().getString(R.string.low_price),periodLowText));
 
