@@ -41,13 +41,34 @@
         <provider
             android:name=".data.generated.QuoteProvider"
             android:authorities="com.sam_chordas.android.stockhawk.data.QuoteProvider"
-            android:exported="false" />
+            android:exported="true" />
 
         <service
             android:name=".service.StockHistoryIntentService"
             android:exported="false" />
 
-        <activity android:name=".ui.PlotActivity"></activity>
+        <activity android:name=".ui.PlotActivity" />
+
+        <receiver android:name=".ui.StockhawkAppWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.sam.chordas.android.stockhawk.SYMBOL_LOOKUP_SUCCESS" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/stockhawk_app_widget_provider_info" />
+        </receiver>
+
+        <service
+            android:name=".service.StockWidgetIntentService"
+            android:exported="false"></service>
+
+        <service
+            android:name=".service.StockWidgetRemoteViewsService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
+
     </application>
 
 </manifest>

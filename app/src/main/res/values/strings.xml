@@ -19,4 +19,6 @@
     <string name="low_price">Period low: %1$s</string>
     <string name="from">From: %1$s</string>
     <string name="to">to: %1$s</string>
+
+    <string name="add_widget">Add widget</string>
 </resources>

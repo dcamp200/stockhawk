@@ -43,6 +43,7 @@ import com.sam_chordas.android.stockhawk.service.StockTaskService;
 import com.sam_chordas.android.stockhawk.touch_helper.SimpleItemTouchHelperCallback;
 import com.sam_chordas.android.stockhawk.webservices.Quote;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,9 +52,6 @@ import java.util.Date;
 public class MyStocksActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final String LOG_TAG = MyStocksActivity.class.getSimpleName();
 
-    /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     */
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -75,11 +73,14 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         super.onCreate(savedInstanceState);
         mContext = this;
 
+        // Set up monitor for these events
         mStockSymbolLookupReceiver = new StockSymbolLookupReceiver();
         mIntentFilter = new IntentFilter();
         mIntentFilter.addAction(Constants.SYMBOL_LOOKUP_FAILURE);
         mIntentFilter.addAction(Constants.SYMBOL_LOOKUP_SUCCESS);
         mIntentFilter.addAction(Constants.SYMBOL_HISTORY_SUCCESS);
+
+
 
         ConnectivityManager cm =
                 (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -121,7 +122,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                         intent.putExtra("symbol",symbol);
                         Calendar calendar = Calendar.getInstance();
                         Date now  = calendar.getTime();
-                        calendar.add(Calendar.MONTH,-1);
+                        calendar.add(Calendar.MONTH,-12);
                         Date start = calendar.getTime();
 
                         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -129,8 +130,6 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                         String endDate = formatter.format(now);
 
                         Log.d( LOG_TAG, "End date:" + endDate + "    StartDate=" + startDate);
-//                        intent.putExtra("startDate","2016-06-15");
-//                        intent.putExtra("endDate","2016-06-22");
                         intent.putExtra("startDate",startDate);
                         intent.putExtra("endDate",endDate);
                         startService(intent);
@@ -296,8 +295,10 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
             Log.d(LOG_TAG, "Action:" + action);
             switch (action) {
                 case Constants.SYMBOL_LOOKUP_SUCCESS:
-                    mLastUpdateTextView.setText(intent.getStringExtra(Constants.SYMBOL_LOOKUP_UPDATE_TIME));
-                    mLastUpdateTextView.setVisibility(View.VISIBLE);
+                    String localDateTime = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+                    String updateTime = String.format(mContext.getResources().getString(R.string.listHeaderText),localDateTime);
+                    mLastUpdateTextView.setText(updateTime);
+                    //mLastUpdateTextView.setVisibility(View.VISIBLE);
                     break;
                 case Constants.SYMBOL_LOOKUP_FAILURE:
                     String stock = intent.getStringExtra(Constants.SYMBOL_NOT_FOUND);

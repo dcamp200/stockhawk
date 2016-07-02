@@ -86,6 +86,12 @@
         ap:rangeLabel="Price"
         ap:domainLabel="Date"
         ap:labelTextSize="25sp"
+        ap:domainTickLabelTextColor="#00000000"
+        ap:domainOriginTickLabelTextColor="#00000000"
+        ap:gridPaddingBottom="1dp"
+        ap:domainOriginTickLabelTextSize="30dp"
+        ap:rangeLabelTextSize="25dp"
+        ap:domainLabelTextSize="25dp"
         />
 
 

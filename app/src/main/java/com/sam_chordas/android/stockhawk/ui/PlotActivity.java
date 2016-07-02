@@ -47,14 +47,10 @@ public class PlotActivity extends Activity {
 
         List<Number> seriesNumbers = new ArrayList<>();
 
-        Quote highQuote = null;
-        Quote lowQuote = null;
+
         float closingPrice = 0;
         if (quotes.size()>0) {
-            highQuote = quotes.get(0);
-            lowQuote = quotes.get(0);
             closingPrice = Float.valueOf(quotes.get(quotes.size() - 1).getClose());
-
         }
 
         NumberFormat numberFormatter = NumberFormat.getCurrencyInstance();
@@ -64,20 +60,18 @@ public class PlotActivity extends Activity {
         float high = 0;
         float periodHigh = 0;
         float low = 0;
-        float periodLow = 0;
+        float periodLow = Float.MAX_VALUE;
 
         for (Quote quote: quotes) {
             high = Float.valueOf(quote.getHigh());
             low  = Float.valueOf(quote.getLow());
-            Log.d(LOG_TAG, "High:" + high + "   PeriodHigh:" + periodHigh);
+
             if (high > periodHigh) {
                 periodHigh = high;
-                highQuote = quote;
             }
 
             if (low < periodLow) {
                 periodLow = low;
-                lowQuote = quote;
             }
             seriesNumbers.add(Float.valueOf(quote.getClose()));
         }
@@ -102,6 +96,13 @@ public class PlotActivity extends Activity {
                 null,                                   // fill color (none)
                 new PointLabelFormatter(Color.WHITE));
 
+        seriesFormat.setPointLabelFormatter(null);
+        plot.getGraphWidget().setRangeTickLabelWidth(50);
+        plot.getGraphWidget().setDomainTickLabelWidth(50);
+
+
+        plot.getGraphWidget().setBackgroundPaint(null);
+        plot.getGraphWidget().setGridBackgroundPaint(null);
         plot.setDomainLabel("Period");
         plot.setRangeLabel("Stock Price");
 

@@ -7,7 +7,6 @@ import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.os.RemoteException;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GcmNetworkManager;
@@ -27,7 +26,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by sam_chordas on 9/30/15.
@@ -55,18 +53,6 @@ public class StockTaskService extends GcmTaskService {
                 .build();
 
         Response response = client.newCall(request).execute();
-
-        Date now = Calendar.getInstance().getTime();
-        String localDate = DateFormat.getDateTimeInstance().format(now);
-        String updateTime = String.format(mContext.getResources().getString(R.string.listHeaderText),localDate);
-        Intent localIntent =
-                new Intent(Constants.SYMBOL_LOOKUP_SUCCESS)
-                        // Puts the current time into the Intent
-                        .putExtra(Constants.SYMBOL_LOOKUP_UPDATE_TIME, updateTime);
-
-        // Broadcasts the Intent to receivers in this app.
-        LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
-
 
         return response.body().string();
     }
@@ -149,6 +135,9 @@ public class StockTaskService extends GcmTaskService {
                     }
                     mContext.getContentResolver().applyBatch(QuoteProvider.AUTHORITY,
                             Utils.quoteJsonToContentVals(getResponse));
+
+                    sendStocksUpdatedEvent();
+
                 } catch (RemoteException | OperationApplicationException e) {
                     Log.e(LOG_TAG, "Error applying batch insert", e);
                 }
@@ -160,4 +149,20 @@ public class StockTaskService extends GcmTaskService {
         return result;
     }
 
+
+    private void sendStocksUpdatedEvent() {
+        Log.d(LOG_TAG, "Sending stock update Event...");
+        // We want to keep the time of the last update and use this in the UI
+        String localDateTime = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+        String updateTime = String.format(mContext.getResources().getString(R.string.listHeaderText),localDateTime);
+        Intent localIntent =
+                new Intent(Constants.SYMBOL_LOOKUP_SUCCESS)
+                        // Puts the current time into the Intent
+                        .putExtra(Constants.SYMBOL_LOOKUP_UPDATE_TIME, updateTime);
+
+        // Broadcasts the Intent to receivers in this app.
+
+        //LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
+        mContext.sendBroadcast(localIntent);
+    }
 }
