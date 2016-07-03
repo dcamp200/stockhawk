@@ -17,7 +17,8 @@
         <TextView android:id="@+id/symbolName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/activity_horizontal_margin"
+            android:padding="@dimen/graph_margin"
+            android:textSize="16dp"
             android:textAllCaps="true"
             tools:text="YHOO"
             />
@@ -26,52 +27,69 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/closing_price"
-            android:padding="@dimen/activity_horizontal_margin"
+            android:padding="@dimen/graph_margin"
+            android:textSize="16dp"
             tools:text="Current price: $25.00"/>
 
     </LinearLayout>
 
+    <TextView android:id="@+id/periodTitle"
+        android:layout_below="@id/stock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/graph_margin"
+        android:textSize="16dp"
+        android:text="@string/last_12_months"
+        />
+
     <LinearLayout android:id="@+id/timePeriod"
-        android:layout_below="@+id/stock"
+        android:layout_below="@+id/periodTitle"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
+
 
         <TextView android:id="@+id/startDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/activity_horizontal_margin"
+            android:padding="@dimen/graph_margin"
             android:text="@string/from"
-            tools:text="From: 01-01-2016"/>
+            tools:text="From: 01-01-2016"
+            android:textSize="16dp"/>
 
         <TextView android:id="@+id/endDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="to: "
-            android:padding="@dimen/activity_horizontal_margin"
+            android:padding="@dimen/graph_margin"
             android:gravity="left"
-            tools:text="to: 12-31-2016"/>
+            tools:text="to: 12-31-2016"
+            android:textSize="16dp"/>
     </LinearLayout>
 
     <LinearLayout android:id="@+id/highLow"
         android:layout_below="@+id/timePeriod"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <TextView android:id="@+id/periodHigh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/activity_horizontal_margin"
+            android:padding="@dimen/graph_margin"
             android:text="@string/high_price"
-            tools:text="Period high: $400.00"/>
+            tools:text="Period high: $400.00"
+            android:textSize="16dp"/>
 
         <TextView android:id="@+id/periodLow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/activity_horizontal_margin"
+            android:padding="@dimen/graph_margin"
             android:text="@string/low_price"
-            tools:text="Period low: $10.00"/>
+            tools:text="Period low: $10.00"
+            android:textSize="16dp"/>
     </LinearLayout>
 
 
