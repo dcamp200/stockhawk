@@ -38,9 +38,6 @@ public class StockWidgetIntentService extends IntentService {
 
             for (int appWidget: appWidgetIds) {
 
-//                RemoteViews views = new RemoteViews(getPackageName(), R.layout.stockhawk_app_widget_provider);
-//                views.setRemoteAdapter(R.id.widget_list_view,);
-
             }
 
         }

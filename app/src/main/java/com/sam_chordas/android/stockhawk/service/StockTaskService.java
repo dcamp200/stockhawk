@@ -7,6 +7,7 @@ import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.os.RemoteException;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GcmNetworkManager;
@@ -161,8 +162,8 @@ public class StockTaskService extends GcmTaskService {
                         .putExtra(Constants.SYMBOL_LOOKUP_UPDATE_TIME, updateTime);
 
         // Broadcasts the Intent to receivers in this app.
+        LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
 
-        //LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);
         mContext.sendBroadcast(localIntent);
     }
 }

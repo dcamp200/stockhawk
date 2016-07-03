@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 /**
  * Created by sam_chordas on 10/6/15.
@@ -19,11 +18,10 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
     private boolean dataIsValid;
     private int rowIdColumn;
     private DataSetObserver mDataSetObserver;
-    private View mEmptyView;
 
-    public CursorRecyclerViewAdapter(Context context, Cursor cursor, View emptyView) {
+
+    public CursorRecyclerViewAdapter(Context context, Cursor cursor) {
         mCursor = cursor;
-        mEmptyView = emptyView;
         dataIsValid = cursor != null;
         rowIdColumn = dataIsValid ? mCursor.getColumnIndex("_id") : -1;
         mDataSetObserver = new NotifyingDataSetObserver();
@@ -94,7 +92,6 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
             notifyDataSetChanged();
         }
 
-        mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
         return oldCursor;
     }
 

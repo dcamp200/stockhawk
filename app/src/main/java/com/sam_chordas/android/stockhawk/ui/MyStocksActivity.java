@@ -109,7 +109,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
 
         getLoaderManager().initLoader(CURSOR_LOADER_ID, null, this);
 
-        mCursorAdapter = new QuoteCursorAdapter(this, null, findViewById(R.id.stockview_empty));
+        mCursorAdapter = new QuoteCursorAdapter(this, null);
         recyclerView.addOnItemTouchListener(new RecyclerViewItemClickListener(this,
                 new RecyclerViewItemClickListener.OnItemClickListener() {
                     @Override
@@ -274,6 +274,9 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mCursorAdapter.swapCursor(data);
         mCursor = data;
+        View emptyView = findViewById(R.id.stockview_empty);
+        emptyView.setVisibility(mCursor.getCount() == 0 ? View.VISIBLE : View.GONE);
+        mLastUpdateTextView.setVisibility(mCursor.getCount() == 0 ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -297,6 +300,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                 case Constants.SYMBOL_LOOKUP_SUCCESS:
                     String localDateTime = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
                     String updateTime = String.format(mContext.getResources().getString(R.string.listHeaderText),localDateTime);
+                    mLastUpdateTextView.setVisibility(View.VISIBLE);
                     mLastUpdateTextView.setText(updateTime);
                     break;
                 case Constants.SYMBOL_LOOKUP_FAILURE:
