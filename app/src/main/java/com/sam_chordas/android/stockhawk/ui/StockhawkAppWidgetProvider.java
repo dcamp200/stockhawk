@@ -1,5 +1,6 @@
 package com.sam_chordas.android.stockhawk.ui;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
@@ -33,8 +34,6 @@ public class StockhawkAppWidgetProvider extends AppWidgetProvider {
             // Set up the intent that starts the StackViewService, which will
             // provide the views for this collection.
             Intent intent = new Intent(context, StockWidgetRemoteViewsService.class);
-            //intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-            //intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
 
             // Set up the RemoteViews object to use a RemoteViews adapter.
             // This adapter connects
@@ -47,9 +46,9 @@ public class StockhawkAppWidgetProvider extends AppWidgetProvider {
             // object above.
             views.setEmptyView(R.id.widget_list_view, R.id.widget_stockview_empty);
 
-//            Intent onClickIntent = new Intent(context, MyStocksActivity.class);
-//            PendingIntent onClickPendingIntent = PendingIntent.getActivity(context,0,onClickIntent,0);
-//            views.setOnClickPendingIntent(R.id.widget_list_view,onClickPendingIntent);
+            Intent onClickIntent = new Intent(context, MyStocksActivity.class);
+            PendingIntent onClickPendingIntent = PendingIntent.getActivity(context,0,onClickIntent,0);
+            views.setOnClickPendingIntent(R.id.widget,onClickPendingIntent);
             appWidgetManager.updateAppWidget(appWidgetId, views);
 
         }

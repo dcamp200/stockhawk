@@ -73,14 +73,14 @@ public class StockWidgetRemoteViewsService extends RemoteViewsService {
 
         @Override
         public RemoteViews getViewAt(int position) {
-            Log.d( LOG_TAG, "Getting view for stock " + position);
+            Log.d(LOG_TAG, "Getting view for stock " + position);
             if (position == AdapterView.INVALID_POSITION) {
                 return null;
             }
 
             Stock stock = mStocks.get(position);
-            Log.d( LOG_TAG, "Building remore view for stock :" + stock);
-            RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.list_item_quote);
+            Log.d(LOG_TAG, "Building remote view for stock :" + stock);
+            RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.list_item_quote_widget);
             remoteViews.setTextViewText(R.id.stock_symbol, stock.symbol);
             remoteViews.setTextViewText(R.id.bid_price, stock.bidPrice);
             remoteViews.setTextViewText(R.id.change, stock.change);
@@ -132,9 +132,11 @@ public class StockWidgetRemoteViewsService extends RemoteViewsService {
                         stock.change = cursor.getString(cursor.getColumnIndexOrThrow(QuoteColumns.CHANGE));
                         stock.percentChange = cursor.getString(cursor.getColumnIndexOrThrow(QuoteColumns.PERCENT_CHANGE));
                         stock.isUp = cursor.getInt(cursor.getColumnIndexOrThrow(QuoteColumns.ISUP));
+                        Log.d(LOG_TAG, "Adding stock:" + stock);
                         stocks.add(stock);
                     }
                 } finally {
+                    Log.d(LOG_TAG, "Closing cursor");
                     cursor.close();
                 }
             }

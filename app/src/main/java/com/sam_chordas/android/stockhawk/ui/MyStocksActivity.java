@@ -298,7 +298,6 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                     String localDateTime = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
                     String updateTime = String.format(mContext.getResources().getString(R.string.listHeaderText),localDateTime);
                     mLastUpdateTextView.setText(updateTime);
-                    //mLastUpdateTextView.setVisibility(View.VISIBLE);
                     break;
                 case Constants.SYMBOL_LOOKUP_FAILURE:
                     String stock = intent.getStringExtra(Constants.SYMBOL_NOT_FOUND);

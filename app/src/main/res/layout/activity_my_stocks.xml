@@ -18,7 +18,6 @@
         android:text="@string/listHeaderText"
         style="@style/HeaderTextStyle"
         android:padding="@dimen/activity_horizontal_margin"
-
         android:gravity="center"/>
 
 
