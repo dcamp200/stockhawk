@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Stock Hawk</string>
 
     <string name="action_example">Example action</string>
@@ -7,18 +7,18 @@
     <string name="action_change_units">Change Units</string>
     <string name="symbol_search">Symbol Search</string>
     <string name="content_test">Search for a Stock Symbol</string>
-    <string name="input_hint">FB</string>
+    <string name="input_hint" translatable="false">FB</string>
     <string name="input_prefill"></string>
     <string name="network_toast">Uh-oh! This app requires an internet connection</string>
     <string name="empty_stock_list">No stock information available at this time. Check Internet connection.</string>
-    <string name="listHeaderText">Last updated:\n%1$s</string>
-    <string name="stockNotFound">%1$s was not found</string>
+    <string name="listHeaderText">Last updated:<xliff:g id="dateTime" example="Last Updated July 2nd, 2016">\n%1$s</xliff:g></string>
+    <string name="stockNotFound"><xliff:g id="stockSymbol" example="YHO was not found">%1$s</xliff:g> was not found</string>
     <string name="alreadySaved">This stock is already saved!</string>
-    <string name="closing_price">Price: %1$s</string>
-    <string name="high_price">Period high: %1$s</string>
-    <string name="low_price">Period low: %1$s</string>
-    <string name="from">From: %1$s</string>
-    <string name="to">to: %1$s</string>
+    <string name="closing_price">Price: <xliff:g id="stockPrice" example="Price $10.00">%1$s</xliff:g></string>
+    <string name="high_price">Period high: <xliff:g id="stockhigh" example="Period high $10.00">%1$s</xliff:g></string>
+    <string name="low_price">Period low: <xliff:g id="stockLow" example="Period low $1.00">%1$s</xliff:g></string>
+    <string name="from">From: <xliff:g id="startDate" example="From: 01-01-2015">%1$s</xliff:g></string>
+    <string name="to">to: <xliff:g id="endDate" example="to: 01-01-2016">%1$s</xliff:g></string>
 
     <string name="add_widget">Add widget</string>
     <string name="last_12_months">Last 12 months</string>
