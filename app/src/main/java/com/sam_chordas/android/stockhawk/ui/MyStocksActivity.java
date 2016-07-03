@@ -23,6 +23,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,6 +68,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     private StockSymbolLookupReceiver mStockSymbolLookupReceiver;
     private IntentFilter mIntentFilter;
     private TextView mLastUpdateTextView;
+    private LinearLayout mStocksView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +92,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                 activeNetwork.isConnectedOrConnecting();
         setContentView(R.layout.activity_my_stocks);
 
+        mStocksView = (LinearLayout)findViewById(R.id.stocksView);
         mLastUpdateTextView = (TextView)findViewById(R.id.lastUpdateTime);
 
         // The intent service is for executing immediate pulls from the Yahoo API
@@ -99,6 +102,9 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
             // Run the initialize task service so that some stocks appear upon an empty database
             mServiceIntent.putExtra("tag", "init");
             if (isConnected) {
+                mStocksView.setVisibility(View.VISIBLE);
+                View emptyView = findViewById(R.id.stockview_empty);
+                emptyView.setVisibility(View.INVISIBLE);
                 startService(mServiceIntent);
             } else {
                 networkToast();
@@ -222,6 +228,11 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
 
     public void networkToast() {
         Toast.makeText(mContext, getString(R.string.network_toast), Toast.LENGTH_SHORT).show();
+
+        mStocksView.setVisibility(View.INVISIBLE);
+        View emptyView = findViewById(R.id.stockview_empty);
+        emptyView.setVisibility(View.VISIBLE);
+        mLastUpdateTextView.setVisibility(View.GONE);
     }
 
     public void restoreActionBar() {
@@ -274,9 +285,6 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mCursorAdapter.swapCursor(data);
         mCursor = data;
-        View emptyView = findViewById(R.id.stockview_empty);
-        emptyView.setVisibility(mCursor.getCount() == 0 ? View.VISIBLE : View.GONE);
-        mLastUpdateTextView.setVisibility(mCursor.getCount() == 0 ? View.GONE : View.VISIBLE);
     }
 
     @Override
